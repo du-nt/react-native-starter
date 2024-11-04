@@ -15,6 +15,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { Profile } from "../_layout";
@@ -75,7 +76,9 @@ export default function Login() {
         <Text style={styles.header}>Welcome back.</Text>
 
         <Link href="/" asChild>
-          <Button title="Home"></Button>
+          <TouchableOpacity>
+            <Text>Home</Text>
+          </TouchableOpacity>
         </Link>
 
         <Text style={styles.label}>First name</Text>
@@ -112,7 +115,9 @@ export default function Login() {
         </View>
 
         <Link href="/register" asChild>
-          <Button title="Register"></Button>
+          <TouchableOpacity>
+            <Text>Register</Text>
+          </TouchableOpacity>
         </Link>
       </KeyboardAvoidingView>
     </View>

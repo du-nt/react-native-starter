@@ -7,8 +7,8 @@ export type TokenBulk = {
 
 export const storeTokens = async (tokenBulk: TokenBulk): Promise<void> => {
   await Promise.all([
-    AsyncStorage.setItem("access_token", tokenBulk.accessToken),
-    AsyncStorage.setItem("refresh_token", tokenBulk.refreshToken),
+    AsyncStorage.setItem("access_token", tokenBulk.accessToken || ""),
+    AsyncStorage.setItem("refresh_token", tokenBulk.refreshToken || ""),
   ]);
 };
 

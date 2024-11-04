@@ -3,12 +3,9 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { SplashScreen } from "expo-router";
 import "react-native-reanimated";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import useBoundStore from "@/stores";
 import { useQuery } from "@/hooks/useQuery";
@@ -29,28 +26,22 @@ const queryClient = new QueryClient({
   },
 });
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 function AppContent() {
   const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  });
   const authenticate = useBoundStore((state) => state.authenticate);
 
-  const { isFetchedAfterMount } = useQuery<Profile>({
+  useQuery<Profile>({
     queryKey: ["profile"],
-    onSuccess: () => {
+    onSuccess: async () => {
       authenticate();
+      await SplashScreen.hideAsync();
+    },
+    onError: async () => {
+      await SplashScreen.hideAsync();
     },
   });
-
-  useEffect(() => {
-    if (loaded && !isFetchedAfterMount) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, isFetchedAfterMount]);
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

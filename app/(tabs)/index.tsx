@@ -1,6 +1,6 @@
 import useBoundStore from "@/stores";
 import { Link } from "expo-router";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
 
 export default function HomeScreen() {
   const unAuthenticate = useBoundStore((state) => state.unAuthenticate);
@@ -17,7 +17,9 @@ export default function HomeScreen() {
         <Button title="Logout" onPress={handleLogout}></Button>
       )}
       <Link href="/login" asChild>
-        <Button title="Login"></Button>
+        <TouchableOpacity>
+          <Text>Login</Text>
+        </TouchableOpacity>
       </Link>
     </View>
   );
