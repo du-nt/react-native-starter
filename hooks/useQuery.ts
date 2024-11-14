@@ -25,8 +25,8 @@ export function useQuery<
   },
   queryClient?: QueryClient
 ): UseQueryResult<TData, TError> {
-  const queryClienta = useQueryClient();
-  const defaultRetry = queryClienta.getDefaultOptions().queries?.retry;
+  const qClient = useQueryClient();
+  const defaultRetry = qClient.getDefaultOptions().queries?.retry;
 
   const {
     config,
@@ -58,7 +58,6 @@ export function useQuery<
     {
       queryKey,
       queryFn: queryFn || defaultQueryFn,
-      ...restOptions,
       retry: (failureCount, error) => {
         if (retry === false) {
           console.log(failureCount);
@@ -79,6 +78,7 @@ export function useQuery<
 
         return true;
       },
+      ...restOptions,
     },
     queryClient
   );
